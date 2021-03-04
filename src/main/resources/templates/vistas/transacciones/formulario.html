@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="/plantillas/principal :: head">
+</head>
+
+<body>
+
+	<nav th:replace="/plantillas/menu :: navbar"></nav>
+
+	<div class="container col-md-4">
+		<form th:action="@{/transacciones/guardar}" th:object="${transaccion}"
+			method="POST" class="mt-5 p-5">
+			<h1>Nueva Transacción</h1>
+			<div class="mb-3">
+				<label for="valor" class="form-label">Valor</label> <input
+					type="number" class="form-control" th:field="*{valor}">
+			</div>
+			<div class="mb-3">
+				<label for="tipoTransaccion" class="form-label">Tipo transacción</label> <select
+					class="form-select" name="tipoTransaccion" id="tipoTransaccion">
+					<option selected>Seleccionar...</option>
+					<option 
+						th:value="ENVIAR" th:text="ENVIAR"></option>
+						<option 
+						th:value="RETIRAR" th:text="RETIRAR"></option>
+				</select>
+			</div>
+			<div class="mb-3">
+				<label for="numeroCuenta" class="form-label">Cuenta</label> <select
+					class="form-select" name="numeroCuenta" id="numeroCuenta">
+					<option selected>Seleccionar...</option>
+					<option th:each="cuenta : ${cuentas}"
+						th:value="${cuenta.numeroCuenta}" th:text="${cuenta.numeroCuenta}"></option>
+				</select>
+			</div>
+			<button type="submit" class="btn btn-primary">Crear</button>
+		</form>
+	</div>
+
+	<th:block th:replace="/plantillas/principal :: scripts"></th:block>
+</body>
+
+</html>

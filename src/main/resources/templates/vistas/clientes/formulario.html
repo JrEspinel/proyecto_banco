@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="/plantillas/principal :: head">
+</head>
+
+<body>
+
+	<nav th:replace="/plantillas/menu :: navbar"></nav>
+
+	<div class="container col-md-6">
+		<form th:action="@{/clientes/guardar}" th:object="${cliente}" method="POST" class="mt-5 p-5">
+			<h1>Formulario Cliente</h1>
+			<div class="mb-3">
+				<label for="cedula" class="form-label">Cedula</label>
+				<input type="text" class="form-control" th:field="*{cedula}" >
+			</div>
+			<div class="mb-3">
+				<label for="nombre" class="form-label">Nombre</label>
+				<input type="text" class="form-control" th:field="*{nombre}" >
+			</div>
+			<div class="mb-3">
+				<label for="telefono" class="form-label">Telefono</label>
+				<input type="tel" class="form-control" th:field="*{telefono}" >
+			</div>
+			<div class="mb-3">
+				<label for="rol" class="form-label">Rol</label>
+				<select class="form-select" name="rol" id="rol">
+					<option selected>Seleccionar...</option>
+					<option value="ADMINISTRADOR">ADMINISTRADOR</option>
+					<option value="CLIENTE">CLIENTE</option>
+				</select>
+			</div>
+			<button type="submit" class="btn btn-primary">Crear</button>
+		</form>
+	</div>
+
+	<th:block th:replace="/plantillas/principal :: scripts"></th:block>
+</body>
+
+</html>

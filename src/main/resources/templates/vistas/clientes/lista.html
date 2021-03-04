@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="/plantillas/principal :: head">
+</head>
+
+<body>
+	<th:block th:replace="/plantillas/menu :: navbar"></th:block>
+	<p th:text="${error}"></p>
+	<div class="container mt-5 w-50">
+		<h1>Lista de Clientes</h1>
+		<div class="alert alert-success" th:if="${guardado!=null}" th:text="${guardado}" role="alert"></div>
+		<div class="alert alert-success" th:if="${ok!=null}" th:text="${ok}" role="alert"></div>
+		<div class="alert alert-danger" th:if="${error!=null}" th:text="${error}" role="alert"></div>
+		<a class="btn btn-primary rounded-pill m-1" th:href="@{/clientes/formulario}"><strong>Crear Cliente</strong></a>
+		<form class="row g-3" th:action="@{/clientes/eliminar}" method="GET">
+			<div class="col-auto">
+				<label for="cedula" class="visually-hidden">Cedula</label>
+				<input type="text" class="form-control border-danger" id="cedula" name="cedula">
+			</div>
+			<div class="col-auto">
+				<button type="submit" class="btn btn-danger mb-3">Eliminar</button>
+			</div>
+		</form>
+		<table class="table table-bordered">
+			<thead class="table-dark">
+				<tr class="text-center">
+					<th scope="col">No. Cedula</th>
+					<th scope="col">Nombres</th>
+					<th scope="col">Telefono</th>
+					<th scope="col">Rol</th>
+					<th scope="col">Acciones</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="cliente:${clientes}">
+					<th scope="row" th:text="${cliente.cedula}"></th>
+					<td th:text="${cliente.nombre}"></td>
+					<td th:text="${cliente.telefono}"></td>
+					<td th:text="${cliente.rol}"></td>
+					<td>
+						<div class="row justify-content-center">
+							<a class="btn btn-warning rounded-pill col-5"
+								th:href="@{/clientes/eliminar/{cedula} (cedula=${cliente.cedula})}"><strong>Editar</strong></a>
+							<a class="btn btn-danger rounded-pill col-5"
+								th:attr="onclick=|eliminar('${cliente.cedula}')|"><strong>Eliminar</strong></a>
+						</div>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<script>
+		function eliminar(cedula) {
+			var r = confirm(`¿Esta seguro de eliminar el cliente C.C. ${cedula}?`)
+			if (r == true) {
+				window.location.href = `/clientes/eliminar?cedula=${cedula}`
+			} else {
+				window.location.href = `/clientes/`
+			}
+		}
+	</script>
+	<th:block th:replace="/plantillas/principal :: scripts"></th:block>
+</body>
+
+</html>

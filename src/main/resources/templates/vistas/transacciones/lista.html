@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/plantillas/principal :: head">
+</head>
+<body>
+<th:block th:replace="/plantillas/menu :: navbar"></th:block>
+<div class="container mt-5 w-75">
+    <h1>Transacciones</h1>
+	<div class="alert alert-success" th:if="${guardado!=null}" th:text="${guardado}" role="alert">
+	</div>
+    <a class="btn btn-primary rounded-pill" th:href="@{/transacciones/formulario}"><strong>Nueva Transacción</strong></a>
+    <table class="table table-bordered">
+        <thead class="table-dark">
+        <tr class="text-center">
+            <th scope="col">#</th>
+            <th scope="col">Cuenta</th>
+            <th scope="col">Fecha</th>
+            <th scope="col">Tipo Transacción</th>
+            <th scope="col">Valor</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="transaccion:${transacciones}">
+            <th scope="row" th:text="${transaccion.idTransaccion}"></th>
+            <td th:text="${transaccion.numeroCuenta.numeroCuenta}"></td>
+            <td th:text="${transaccion.fecha}"></td>
+            <td th:text="${transaccion.tipoTransaccion}"></td>
+            <td th:text="${transaccion.valor}"></td>
+        </tr>
+
+        </tbody>
+    </table>
+</div>
+<th:block th:replace="/plantillas/principal :: scripts"></th:block>
+</body>
+</html>

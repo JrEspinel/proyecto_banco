@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="/plantillas/principal :: head">
+</head>
+
+<body>
+
+	<nav th:replace="/plantillas/menu :: navbar"></nav>
+	<div class="container col-md-6">
+		<form th:action="@{/cuentas/guardar}" th:object="${cuenta}" method="POST" class="mt-5 p-5">
+			<h1>Formulario Cuenta</h1>
+			<div class="mb-3">
+				<label for="numeroCuenta" class="form-label">Numero de cuenta</label>
+				<input type="text" class="form-control" th:field="*{numeroCuenta}">
+			</div>
+			<div class="mb-3">
+				<label for="clienteCedula" class="form-label">Titular</label>
+				<select class="form-select" name="clienteCedula" id="clienteCedula">
+					<option >Seleccionar...</option>
+					<option th:each="cliente : ${clientes}" th:value="${cliente.cedula}"
+						th:text="${cliente.cedula +' '+cliente.nombre}"></option>
+				</select>
+			</div>
+
+			<div class="form-check mb-3">
+				<input class="form-check-input" type="checkbox" value="" th:field="*{estado}">
+				<label class="form-check-label" for="estado">
+					Estado de Cuenta
+				</label>
+			</div>
+			<button type="submit" class="btn btn-primary">Crear</button>
+		</form>
+	</div>
+
+	<th:block th:replace="/plantillas/principal :: scripts"></th:block>
+</body>
+
+</html>
