@@ -5,6 +5,8 @@ import com.abaco.service.ClienteService;
 import com.abaco.service.CuentaService;
 
 import java.util.Date;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
@@ -46,16 +49,28 @@ public class CuentaController {
 
 	@PostMapping("/guardar")
 	public String guardarCuenta(Cuenta cuenta, RedirectAttributes attributes) {
-		//var _cuenta = cuentaService.buscarPorId(cuenta.getNumeroCuenta());
-		cuenta.setFecha(new Date());
-		cuentaService.guardar(cuenta);
-		attributes.addFlashAttribute("guardado", "Cuenta guardada correctamente");
+		boolean _cuenta = cuentaService.buscarPorId(cuenta.getNumeroCuenta()).isPresent();
+		System.out.println(_cuenta);
+		if(!_cuenta) {
+			cuenta.setFecha(new Date());
+			cuentaService.guardar(cuenta);
+			attributes.addFlashAttribute("ok", "Cuenta guardada correctamente");
+			return "redirect:/cuentas/";
+		}
+		attributes.addFlashAttribute("error", "Esta cuenta ya esta asignada");
 		return "redirect:/cuentas/";
+		
 	}
 
 	@GetMapping("/eliminar/{numeroCuenta}")
-	public String eliminarCuenta(@PathVariable String numeroCuenta) {
-		cuentaService.eliminarPorCuenta(numeroCuenta);
+	public String eliminarCuenta(@PathVariable String numeroCuenta, RedirectAttributes attributes) {
+		 Optional<Cuenta> _cuenta = cuentaService.buscarPorId(numeroCuenta);
+		 if(!_cuenta.isPresent()) {
+			 attributes.addFlashAttribute("error", "La cuenta no existe");
+			return "redirect:/cuentas/";
+		 }
+		 attributes.addFlashAttribute("ok", "Cuenta eliminada correctamente");
+		 cuentaService.eliminarPorCuenta(numeroCuenta);
 		return "redirect:/cuentas/";
 	}
 

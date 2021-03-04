@@ -6,11 +6,11 @@
 <th:block th:replace="/plantillas/menu :: navbar"></th:block>
 <div class="container mt-5 w-75">
     <h1>Lista de Cuentas</h1>
+        <div class="alert alert-danger" th:if="${duplicado!=null}" th:text="${duplicado}" role="alert">
+    </div>
+	<div class="alert alert-success" th:if="${ok!=null}" th:text="${ok}" role="alert"></div>
+    <div class="alert alert-danger" th:if="${error!=null}" th:text="${error}" role="alert"></div>	
     <a class="btn btn-primary rounded-pill" th:href="@{/cuentas/formulario}"><strong>Crear Cuentas</strong></a>
-    <div class="alert alert-danger" th:if="${duplicado!=null}" th:text="${duplicado}" role="alert">
-	</div>
-	<div class="alert alert-success" th:if="${guardado!=null}" th:text="${guardado}" role="alert">
-	</div>
 	<a class="badge rounded-pill nav-link bg-primary" th:href="@{/cuentas/}">Todas las Cuentas</a>
 	<a class="badge rounded-pill nav-link bg-success" th:href="@{/cuentas/estado/activas}">Cuentas Activas</a>
 	<a class="badge rounded-pill nav-link bg-danger" th:href="@{/cuentas/estado/inactivas}">Cuentas Inactivas</a>
@@ -36,7 +36,7 @@
             <td >
                 <div class="row justify-content-center">
                     <a class="btn btn-warning rounded-pill col-4" th:href="@{/cuentas/editar/{numcuenta} (numcuenta=${cuenta.numeroCuenta})}"><strong>Editar</strong></a>
-                    <a class="btn btn-danger rounded-pill col-4 " th:href="@{/cuentas/eliminar/{numeroCuenta} (numeroCuenta=${cuenta.numeroCuenta})}"><strong>Eliminar</strong></a>
+                    <a class="btn btn-danger rounded-pill col-4 " th:attr="onclick=|eliminar(${cuenta.numeroCuenta})|"><strong>Eliminar</strong></a>
                 </div>
             </td>
         </tr>
@@ -44,6 +44,16 @@
         </tbody>
     </table>
 </div>
+<script>
+		function eliminar(cuenta) {
+			var r = confirm(`¿Esta seguro de eliminar la cuenta No. ${cuenta}?`)
+			if (r == true) {
+				window.location.href = `/cuentas/eliminar/${cuenta}`
+			} else {
+				window.location.href = `/cuentas/`
+			}
+		}
+	</script>
 <th:block th:replace="/plantillas/principal :: scripts"></th:block>
 </body>
 </html>

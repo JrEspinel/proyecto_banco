@@ -12,16 +12,16 @@
 		<div class="alert alert-success" th:if="${guardado!=null}" th:text="${guardado}" role="alert"></div>
 		<div class="alert alert-success" th:if="${ok!=null}" th:text="${ok}" role="alert"></div>
 		<div class="alert alert-danger" th:if="${error!=null}" th:text="${error}" role="alert"></div>
-		<a class="btn btn-primary rounded-pill m-1" th:href="@{/clientes/formulario}"><strong>Crear Cliente</strong></a>
 		<form class="row g-3" th:action="@{/clientes/eliminar}" method="GET">
 			<div class="col-auto">
 				<label for="cedula" class="visually-hidden">Cedula</label>
-				<input type="text" class="form-control border-danger" id="cedula" name="cedula">
+				<input type="text" class="form-control border-danger .text-danger" id="cedula" name="cedula">
 			</div>
 			<div class="col-auto">
 				<button type="submit" class="btn btn-danger mb-3">Eliminar</button>
 			</div>
 		</form>
+		<a class="btn btn-primary rounded-pill m-1" th:href="@{/clientes/formulario}"><strong>Crear Cliente</strong></a>
 		<table class="table table-bordered">
 			<thead class="table-dark">
 				<tr class="text-center">

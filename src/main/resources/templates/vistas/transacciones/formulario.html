@@ -14,14 +14,14 @@
 			<h1>Nueva Transacción</h1>
 			<div class="mb-3">
 				<label for="valor" class="form-label">Valor</label> <input
-					type="number" class="form-control" th:field="*{valor}">
+					type="number" class="form-control" th:field="*{valor}" min="1">
 			</div>
 			<div class="mb-3">
 				<label for="tipoTransaccion" class="form-label">Tipo transacción</label> <select
 					class="form-select" name="tipoTransaccion" id="tipoTransaccion">
 					<option selected>Seleccionar...</option>
 					<option 
-						th:value="ENVIAR" th:text="ENVIAR"></option>
+						th:value="ENVIAR" th:text="INGRESAR"></option>
 						<option 
 						th:value="RETIRAR" th:text="RETIRAR"></option>
 				</select>
